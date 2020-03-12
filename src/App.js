@@ -8,14 +8,22 @@ const App = () => {
     Major: "",
     GPA: "",
   })
-  const [form, setForm] = useState();
+  const [name, setName] = useState();
+  const [surname, setSurname] = useState();
+  const [Major, setMajor] = useState();
+  const [GPA, setGPA] = useState();
 
   const getBears = async () => {
     const result = await axios.get('http://localhost:3000/api/students');
     setBears(result)
   }
-  const addBear = (bear) => {
-    axios.post(bear);
+  const addBear = async (bear) => {
+    const result = await axios.post('http://localhost:3000/api/students', {
+      name,
+      surname,
+      Major,
+      GPA
+    });
   }
   const putBear = (id) => {
     axios.post();
@@ -23,12 +31,21 @@ const App = () => {
   const deleteBear = () => {
     axios.delete();
   }
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    addBear();
   }
-  const handleChange = (e) => {
-    setForm(e.target.value)
+  const handleName = (e) => {
+    setName(e.target.value)
+  }
+  const handleSurname = (e) => {
+    setSurname(e.target.value)
+  }
+  const handleMajor = (e) => {
+    setMajor(e.target.value)
+  }
+  const handleGPA = (e) => {
+    setGPA(e.target.value)
   }
 
   useEffect(() => {
@@ -38,11 +55,32 @@ const App = () => {
   return (
     <>
       <pre>{JSON.stringify(bears)}</pre>
-      <pre>{form}</pre>
+      <pre>{name}</pre>
+      <pre>{surname}</pre>
+      <pre>{Major}</pre>
+      <pre>{GPA}</pre>
       <form onSubmit={(e) => handleSubmit(e)}>
         <label>
           Name:
-          <input type="text" name="name" onChange={handleChange} />
+          <input type="text" name="name" onChange={handleName} />
+        </label>
+      </form>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <label>
+          Surname:
+          <input type="text" name="name" onChange={handleSurname} />
+        </label>
+      </form>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <label>
+          Major:
+          <input type="text" name="name" onChange={handleMajor} />
+        </label>
+      </form>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <label>
+          GPA:
+          <input type="text" name="name" onChange={handleGPA} />
         </label>
         <input type="submit" />
       </form>
