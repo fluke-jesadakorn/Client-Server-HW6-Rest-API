@@ -1,0 +1,38 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color:gray;
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    background-color: gray;
+}
+
+button {
+    background-color: dimgray;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    margin: 4px 2px;
+}
+
+body {
+    background-color: black;
+}
+label{
+    color: wheat;
+}

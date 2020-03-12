@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './App.css'
 const App = () => {
-  const [bears, setBears] = useState({
+  const [students, setStudents] = useState({
     id: "",
     name: "",
     surname: "",
@@ -13,23 +14,31 @@ const App = () => {
   const [Major, setMajor] = useState();
   const [GPA, setGPA] = useState();
 
-  const getBears = async () => {
+  const getStudents = async () => {
     const result = await axios.get('http://localhost:3000/api/students');
-    setBears(result)
+    setStudents(result.data)
   }
   const addBear = async (bear) => {
-    const result = await axios.post('http://localhost:3000/api/students', {
+    axios.post('http://localhost:3000/api/students', {
       name,
       surname,
       Major,
       GPA
     });
+    getStudents();
   }
-  const putBear = (id) => {
-    axios.post();
+  const putStudent = (id) => {
+    axios.put(`http://localhost:3000/api/students/${id}`, {
+      name,
+      surname,
+      Major,
+      GPA
+    });
+    getStudents()
   }
-  const deleteBear = () => {
-    axios.delete();
+  const deleteStudent = (id) => {
+    axios.delete(`http://localhost:3000/api/students/${id}`);
+    getStudents()
   }
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,18 +56,40 @@ const App = () => {
   const handleGPA = (e) => {
     setGPA(e.target.value)
   }
+  const printStudents = () => {
+    if (students && students.length) {
+      return (
+        students.map((item) => (
+          <table>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Surname</th>
+              <th>Major</th>
+              <th>GPA</th>
+              <th>Method</th>
+            </tr>
+            <tr>
+              <td>{item.id}</td>
+              <td>{item.name}</td>
+              <td>{item.surname}</td>
+              <td>{item.Major}</td>
+              <td>{item.GPA}</td>
+              <td><button onClick={() => putStudent(item.id)}>update</button>
+                <button onClick={() => deleteStudent(item.id)}>delete</button></td>
+            </tr>
+          </table>
 
+        ))
+      )
+    }
+  }
   useEffect(() => {
-    getBears();
+    getStudents();
   })
-
   return (
     <>
-      <pre>{JSON.stringify(bears)}</pre>
-      <pre>{name}</pre>
-      <pre>{surname}</pre>
-      <pre>{Major}</pre>
-      <pre>{GPA}</pre>
+      {printStudents()}
       <form onSubmit={(e) => handleSubmit(e)}>
         <label>
           Name:
@@ -82,8 +113,10 @@ const App = () => {
           GPA:
           <input type="text" name="name" onChange={handleGPA} />
         </label>
-        <input type="submit" />
+        <br />
+        <button type="submit">add </button>
       </form>
+
     </>
   );
 }
