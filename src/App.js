@@ -116,7 +116,6 @@ const App = () => {
         <br />
         <button type="submit">add </button>
       </form>
-
     </>
   );
 }
